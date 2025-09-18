@@ -1,0 +1,352 @@
+.hero-graphic {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  max-height: 500px;
+}
+
+.graphic-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.graphic-shape {
+  position: absolute;
+}
+
+/* Colors and Basic Shapes */
+.magenta-capsule {
+  background-color: #F6D666; /* Adjusted color to match image */
+  width: 5rem;
+  height: 11rem;
+  border-radius: 999px;
+  top: -80px;
+  left: 6%;
+}
+
+.magenta-star {
+  background-color: #d130a1;
+  width: 2.5rem;
+  height: 2.5rem;
+  clip-path: polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0% 50%, 35% 35%);
+  top: 110px;
+  left: 10%;
+  scale: 1.7;
+}
+
+.yellow-circle {
+  background-color: #F6D666;
+  border-radius: 50%;
+}
+
+.yellow-capsule {
+  background-color: #F6D666;
+  border-radius: 999px;
+}
+
+/* Individual Shape Positioning & Sizing */
+.circle-1 {
+  width: 5rem;
+  height: 5rem;
+  top: -80px;
+  left: 22%;
+}
+.circle-2 {
+  width: 5rem;
+  height: 5rem;
+  top: 35%;
+  left: 22%;
+}
+.circle-3 {
+  width: 5rem;
+  height: 5rem;
+  top: 80px;
+  left: 22%;
+}
+.circle-4 {
+  width: 5rem;
+  height: 5rem;
+  top: 10%;
+  left: 52%;
+}
+
+.circle-5 {
+  width: 5rem;
+  height: 5rem;
+  top: 80px;
+  left: 52%;
+}
+
+.circle-6 {
+  width: 5rem;
+  height: 5rem;
+  top: -70px;
+  left: 52%;
+  scale: 0.4;
+}
+
+.capsule-1 {
+  width: 4rem;
+  height: 12rem;
+  top: 100px;
+  left: 36%;
+  transform: rotate(90deg);
+}
+.capsule-2 {
+  width: 4rem;
+  height: 12rem;
+  top: 50%;
+  left: 78%;
+  transform: rotate(15deg);
+}
+.capsule-3 {
+  width: 4rem;
+  height: 12rem;
+  top: 15%;
+  left: 90%;
+  transform: rotate(15deg);
+}
+.capsule-4 {
+  width: 4rem;
+  height: 12rem;
+  top: 60%;
+  left: 90%;
+  transform: rotate(15deg);
+}
+
+.capsule-5 {
+  width: 4rem;
+  height: 15rem;
+  top: -76px;
+  left: 39%;
+}
+
+.capsule-6 {
+  width: 10rem;
+  height: 4rem;
+  bottom: 10%;
+  left: 45%;
+}
+
+.capsule-7 {
+  width: 2.5rem;
+  height: 5.5rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  top: 10%;
+  right: 17%;
+  background-color: #d130a1; /* Adjusted color to match image */
+  transform: rotate(-30deg);
+}
+
+/* White Rings - Compressed Spring Structure */
+.white-rings {
+  bottom: 10%;
+  left: 5%;
+  width: 6rem;
+  height: 8rem; /* Compact height for compressed spring look */
+  position: absolute;
+  /* Container for compressed spring-like ring arrangement */
+}
+
+.custom-ring {
+  border: 2px solid #e0e0e0;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  box-sizing: border-box;
+  /* Compressed spring effect with close vertical spacing */
+}
+
+/* Compressed Spring Structure - Rings very close together */
+.ring-1 {
+  top: 220%;
+  width: 90%;
+  height: 1.5rem;
+  transform: translateX(-50%) rotateX(45deg);
+  border-color: #f0f0f0;
+  border-width: 2px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.ring-2 {
+  top: 230%;
+  width: 88%;
+  height: 1.4rem;
+  transform: translateX(-50%) rotateX(45deg);
+  border-color: #e8e8e8;
+  border-width: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.ring-3 {
+  top: 240%;
+  width: 86%;
+  height: 1.3rem;
+  transform: translateX(-50%) rotateX(45deg);
+  border-color: #e0e0e0;
+  border-width: 2px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+.ring-4 {
+  top: 250%;
+  width: 84%;
+  height: 1.2rem;
+  transform: translateX(-50%) rotateX(45deg);
+  border-color: #d8d8d8;
+  border-width: 2px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+/* React Reload Icon - Topmost Element */
+.reload-icon-top {
+  position: absolute;
+  z-index: 1000 !important; /* Highest z-index to be above all elements */
+  color: #ffffff;
+  opacity: 0.9;
+  top: 75%;
+  left: 285%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; /* Optional: makes it non-interactive */
+}
+
+/* @keyframes rotateArrow {
+  0% { transform: translate(-50%, -50%) rotate(-45deg); }
+  100% { transform: translate(-50%, -50%) rotate(315deg); }
+}
+
+@keyframes pulseArrow {
+  0%, 100% { opacity: 0.8; transform: rotate(45deg) scale(1); }
+  50% { opacity: 1; transform: rotate(45deg) scale(1.2); }
+} */
+
+/* Bouncing Ball Animation - SVGator Style */
+.bouncing-ball {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  left: 12%;
+  background: radial-gradient(circle at 30% 30%, #ff69b4, #d130a1);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(209, 48, 161, 0.4);
+  z-index: 0;
+  scale: 5;
+  animation: satisfyingBounce 8s infinite ease-in-out;
+}
+
+/* MATHEMATICALLY PRECISE Morphing Animation - Perfect Element Alignment */
+@keyframes satisfyingBounce {
+  
+  /* 0% - START at white-rings (spring) */
+  0% {
+    bottom: 10%;   /* EXACT: white-rings bottom: 10% */
+    left: 7%;      /* EXACT: white-rings left: 5% + center offset */
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    transform: scale(1);
+  }
+  
+  /* 12% - Bounce up from spring */
+  12% {
+    bottom: 20%;
+    left: 10%;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    transform: scale(1.2);
+  }
+  
+  /* 24% - LAND on magenta-capsule (MORPH TO CAPSULE) */
+  24% {
+    top: -20%;     /* EXACT: magenta-capsule top: -80px converted */
+    left: 8.5%;    /* EXACT: magenta-capsule left: 6% + center (5rem width) */
+    width: 1.25rem;  /* EXACT PROPORTION: 5rem → 1.25rem */
+    height: 2.75rem; /* EXACT PROPORTION: 11rem → 2.75rem */
+    border-radius: 999px;
+    transform: scale(1);
+  }
+  
+  /* 36% - BOUNCE to circle-1 (MORPH TO CIRCLE) */
+  36% {
+    top: -20%;     /* EXACT: circle-1 top: -80px */
+    left: 24.5%;   /* EXACT: circle-1 left: 22% + center (5rem width) */
+    width: 1.25rem;  /* EXACT PROPORTION: 5rem → 1.25rem */
+    height: 1.25rem; /* EXACT PROPORTION: 5rem → 1.25rem */
+    border-radius: 50%;
+    transform: scale(1.1);
+  }
+  
+  /* 48% - BOUNCE to circle-2 (STAY CIRCLE) */
+  48% {
+    top: 35%;      /* EXACT: circle-2 top: 35% */
+    left: 24.5%;   /* EXACT: circle-2 left: 22% + center */
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    transform: scale(1);
+  }
+  
+  /* 60% - BOUNCE to circle-3 (STAY CIRCLE) */
+  60% {
+    top: 20%;      /* EXACT: circle-3 top: 80px converted */
+    left: 24.5%;   /* EXACT: circle-3 left: 22% + center */
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    transform: scale(1.1);
+  }
+  
+  /* 72% - BOUNCE to capsule-1 (MORPH TO HORIZONTAL CAPSULE) */
+  72% {
+    top: 25%;      /* EXACT: capsule-1 top: 100px converted */
+    left: 38%;     /* EXACT: capsule-1 left: 36% + center */
+    width: 3rem;     /* EXACT PROPORTION: 12rem → 3rem (rotated) */
+    height: 1rem;    /* EXACT PROPORTION: 4rem → 1rem (rotated) */
+    border-radius: 999px;
+    transform: scale(1) rotate(90deg);
+  }
+  
+  /* 84% - BOUNCE to capsule-5 (MORPH TO VERTICAL CAPSULE) */
+  84% {
+    top: -19%;     /* EXACT: capsule-5 top: -76px converted */
+    left: 40%;     /* EXACT: capsule-5 left: 39% + center */
+    width: 1rem;     /* EXACT PROPORTION: 4rem → 1rem */
+    height: 3.75rem; /* EXACT PROPORTION: 15rem → 3.75rem */
+    border-radius: 999px;
+    transform: scale(1) rotate(0deg);
+  }
+  
+  /* 88% - RETURN via circle-2 */
+  88% {
+    top: 35%;
+    left: 24.5%;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    transform: scale(1.2);
+  }
+  
+  /* 94% - RETURN via magenta-capsule */
+  94% {
+    top: -20%;
+    left: 8.5%;
+    width: 1.25rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    transform: scale(1.1);
+  }
+  
+  /* 100% - END back at spring */
+  100% {
+    bottom: 10%;
+    left: 7%;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    transform: scale(1);
+  }
+}
