@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext.jsx";
 import { logsApiService } from "../services/logsApi.js";
 import { apiService } from "../services/authApi.js";
 import { FiActivity, FiAlertTriangle } from "react-icons/fi";
+import { Box, Drawer, useMediaQuery, useTheme, Container } from "@mui/material";
 
 // Import our new modular components
 import Sidebar from "../components/Dashboard/Sidebar/Sidebar";
@@ -358,13 +359,17 @@ function DashboardPage() {
     }
   };
 
+  const theme = useTheme();
+  const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
+  const drawerWidth = 256;
+
   if (loading) {
     return (
-      <div className="min-h-screen w-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
-        <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8">
+      <div className="min-h-screen w-screen bg-black flex items-center justify-center">
+        <div className="bg-white/5 backdrop-blur-md rounded-3xl shadow-2xl border border-white/10 p-8">
           <div className="flex items-center space-x-3">
-            <FiActivity className="animate-spin h-6 w-6 text-blue-600" />
-            <span className="text-gray-700 font-medium">
+            <FiActivity className="animate-spin h-6 w-6 text-indigo-400" />
+            <span className="text-slate-200 font-medium">
               Loading dashboard...
             </span>
           </div>
@@ -374,30 +379,34 @@ function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen w-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-indigo-400/20 to-pink-400/20 rounded-full blur-3xl"></div>
+    <div className="min-h-screen w-screen bg-black text-slate-100 relative overflow-hidden">
+      {/* Subtle gradient glows */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative z-10 flex min-h-screen">
-        {/* Mobile Sidebar Overlay */}
-        {sidebarOpen && (
-          <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
-
-        {/* Sidebar */}
-        <div
-          className={`
-          fixed lg:relative lg:translate-x-0 transition-transform duration-300 ease-in-out z-50
-          ${
-            sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-          }
-        `}
+      {/* Layout */}
+      <Box
+        className="relative z-10"
+        sx={{ display: "flex", minHeight: "100vh" }}
+      >
+        {/* Sidebar via Drawer */}
+        <Drawer
+          variant={lgUp ? "permanent" : "temporary"}
+          open={lgUp ? true : sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          ModalProps={{ keepMounted: true }}
+          PaperProps={{
+            sx: {
+              width: drawerWidth,
+              borderRight: "1px solid",
+              borderColor: "divider",
+              bgcolor: "background.paper",
+              backgroundImage: "none",
+              overflowX: "hidden",
+            },
+          }}
         >
           <Sidebar
             activeTab={activeTab}
@@ -406,31 +415,36 @@ function DashboardPage() {
             user={user}
             onClose={() => setSidebarOpen(false)}
           />
-        </div>
+        </Drawer>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col min-w-0">
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, minWidth: 0, ml: { lg: `${drawerWidth}px` } }}
+        >
           {/* Header */}
-          <DashboardHeader
-            activeTab={activeTab}
-            onRefresh={fetchDashboardData}
-            onDeleteAllLogs={handleDeleteAllLogs}
-            showDeleteButton={activeTab === "logs" && logs.length > 0}
-            onMenuClick={() => setSidebarOpen(true)}
-          />
+          <Box sx={{ px: { xs: 2, md: 3 }, pt: { xs: 2, md: 3 } }}>
+            <DashboardHeader
+              activeTab={activeTab}
+              onRefresh={fetchDashboardData}
+              onDeleteAllLogs={handleDeleteAllLogs}
+              showDeleteButton={activeTab === "logs" && logs.length > 0}
+              onMenuClick={() => setSidebarOpen(true)}
+            />
+          </Box>
 
           {/* Error Message */}
           {error && (
-            <div className="mx-4 lg:mx-6 mb-4 lg:mb-6 bg-red-50/80 backdrop-blur-sm border border-red-200 rounded-xl p-4">
+            <div className="mx-4 lg:mx-6 mb-4 lg:mb-6 bg-red-500/10 backdrop-blur-md border border-red-500/30 rounded-xl p-4">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between space-y-3 lg:space-y-0">
                 <div className="flex items-start lg:items-center">
-                  <FiAlertTriangle className="h-5 w-5 text-red-500 mr-2 mt-0.5 lg:mt-0 flex-shrink-0" />
+                  <FiAlertTriangle className="h-5 w-5 text-red-400 mr-2 mt-0.5 lg:mt-0 flex-shrink-0" />
                   <div>
-                    <p className="text-red-700 font-medium text-sm lg:text-base">
+                    <p className="text-red-200 font-medium text-sm lg:text-base">
                       {error}
                     </p>
                     {error.includes("Authentication") && (
-                      <p className="text-red-600 text-xs lg:text-sm mt-1">
+                      <p className="text-red-300 text-xs lg:text-sm mt-1">
                         This might be due to recent database changes. Try
                         logging out and back in.
                       </p>
@@ -484,7 +498,7 @@ function DashboardPage() {
                   )}
                   <button
                     onClick={() => setError("")}
-                    className="px-2 lg:px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-xs lg:text-sm"
+                    className="px-2 lg:px-3 py-1 bg-white/10 text-slate-200 rounded-lg hover:bg-white/20 transition-colors text-xs lg:text-sm"
                   >
                     Dismiss
                   </button>
@@ -499,8 +513,8 @@ function DashboardPage() {
             logs={logs}
             logsLoading={loading}
           />
-        </div>
-      </div>
+        </Box>
+      </Box>
 
       {/* Notification */}
       {notification && (

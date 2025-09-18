@@ -1,59 +1,94 @@
 import React from "react";
 import StatsCards from "../Stats/StatsCards";
 import LogsTable from "../Logs/LogsTable.jsx";
+import NivoLineActivity from "../Charts/NivoLineActivity.jsx";
+import NivoBarLogsByType from "../Charts/NivoBarLogsByType.jsx";
+import NivoPieRisk from "../Charts/NivoPieRisk.jsx";
+import ProgressCircle from "../Charts/ProgressCircle.jsx";
+import ProfilePage from "../UserProfile/ProfilePage.jsx";
 
 const MainContent = ({ activeTab, logs = [], logsLoading = false }) => {
+  const renderOverview = () => (
+    <div className="space-y-4">
+      {/* Row 1: 4 Stats cards */}
+      <StatsCards logs={logs} />
+
+      {/* Row 2: Line graph (50%) + Past Logs (50%) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="min-h-0">
+          <NivoLineActivity logs={logs} height={280} />
+        </div>
+        <div className="min-h-0">
+          <LogsTable
+            logs={logs}
+            loading={logsLoading}
+            limit={5}
+            maxHeight={280}
+            compact
+          />
+        </div>
+      </div>
+
+      {/* Row 3: Bar, Pie, Risk Score ring */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <NivoBarLogsByType logs={logs} />
+        <NivoPieRisk logs={logs} />
+        <ProgressCircle logs={logs} />
+      </div>
+    </div>
+  );
+
+  const renderCharts = () => (
+    <div className="space-y-4">
+      {/* Row 3: Bar, Pie, Risk Score ring */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <NivoBarLogsByType logs={logs} />
+        <NivoPieRisk logs={logs} />
+        <ProgressCircle logs={logs} />
+      </div>
+      {/* Row 2: Line graph (50%) + Placeholder (50%) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="min-h-0">
+          <NivoLineActivity logs={logs} />
+        </div>
+        <div className="hidden lg:block min-h-0" />
+      </div>
+    </div>
+  );
+
   const renderTabContent = () => {
     switch (activeTab) {
       case "overview":
-        return (
-          <div>
-            <StatsCards logs={logs} />
-          </div>
-        );
-
+        return renderOverview();
       case "logs":
         return (
           <div>
             <LogsTable logs={logs} loading={logsLoading} />
           </div>
         );
-
       case "analytics":
         return (
-          <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-4 md:p-6">
-            <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-4">
-              Analytics Dashboard
-            </h2>
-            <div className="text-center py-8 md:py-12">
-              <p className="text-gray-600">Analytics features coming soon...</p>
-            </div>
-          </div>
-        );
-
-      case "profile":
-        return (
-          <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-4 md:p-6">
-            <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-4">
-              Profile Settings
-            </h2>
-            <div className="text-center py-8 md:py-12">
-              <p className="text-gray-600">Profile settings coming soon...</p>
-            </div>
-          </div>
-        );
-
-      default:
-        return (
           <div>
-            <StatsCards logs={logs} />
-            <LogsTable logs={logs.slice(0, 5)} loading={logsLoading} />
+            {/* Full past activity table only */}
+            <LogsTable
+              logs={logs}
+              loading={logsLoading}
+              limit={logs?.length || 1000}
+            />
           </div>
         );
+      case "charts":
+        return renderCharts();
+      case "profile":
+        return <ProfilePage />;
+      default:
+        return renderOverview();
     }
   };
 
-  return <div className="flex-1 p-4 md:p-6">{renderTabContent()}</div>;
+  return (
+    <div className="flex-1 p-4 md:p-6 text-slate-100">{renderTabContent()}</div>
+  );
 };
 
 export default MainContent;
