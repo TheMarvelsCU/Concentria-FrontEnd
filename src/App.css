@@ -43,3 +43,15 @@ body {
 html, body {
   overflow-x: hidden;
 }
+
+/* @keyframes float {
+  0% { transform: translateY(0px) rotate(15deg); }
+  50% { transform: translateY(-10px) rotate(15deg); }
+  100% { transform: translateY(0px) rotate(15deg); }
+}
+
+.capsule-1 {
+  animation: float 3s ease-in-out infinite;
+} */
+
+/* Custom styles for the intricate hero graphic */
