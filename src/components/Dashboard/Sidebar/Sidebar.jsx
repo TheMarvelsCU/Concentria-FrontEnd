@@ -1,102 +1,241 @@
 import React from "react";
 import {
-  AiOutlineHome,
-  AiOutlineFileText,
-  AiOutlineBarChart,
-  AiOutlineUser,
-  AiOutlineLogout,
-} from "react-icons/ai";
-import logo from "../../../media/Design a modern, fut.png";
+  Box,
+  Typography,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  Avatar,
+  Button,
+} from "@mui/material";
+import HomeOutlined from "@mui/icons-material/HomeOutlined";
+import PeopleOutlined from "@mui/icons-material/PeopleOutlined";
+import ContactsOutlined from "@mui/icons-material/ContactsOutlined";
+import ReceiptOutlined from "@mui/icons-material/ReceiptOutlined";
+import PersonOutlineOutlined from "@mui/icons-material/PersonOutlineOutlined";
+import CalendarTodayOutlined from "@mui/icons-material/CalendarTodayOutlined";
+import HelpOutlineOutlined from "@mui/icons-material/HelpOutlineOutlined";
+import BarChartOutlined from "@mui/icons-material/BarChartOutlined";
+import PieChartOutline from "@mui/icons-material/PieChartOutline";
+import TimelineOutlined from "@mui/icons-material/TimelineOutlined";
+import MapOutlined from "@mui/icons-material/MapOutlined";
+import LogoutOutlined from "@mui/icons-material/LogoutOutlined";
+import InsightsOutlined from "@mui/icons-material/InsightsOutlined";
 
 const Sidebar = ({ activeTab, setActiveTab, user, onLogout, onClose }) => {
-  const navigationItems = [
-    { id: "overview", label: "Overview", icon: AiOutlineHome },
-    { id: "logs", label: "Activity Logs", icon: AiOutlineFileText },
-    { id: "analytics", label: "Analytics", icon: AiOutlineBarChart },
-    { id: "profile", label: "Profile", icon: AiOutlineUser },
+  const userEmail = user?.email || "";
+  const displayName = userEmail.split("@")[0] || "Ed Roh";
+
+  const sections = [
+    {
+      header: null,
+      items: [
+        {
+          id: "dashboard",
+          label: "Dashboard",
+          icon: HomeOutlined,
+          tab: "overview",
+        },
+        {
+          id: "analytics-home",
+          label: "Analytics",
+          icon: InsightsOutlined,
+          tab: "analytics",
+        },
+      ],
+    },
+    {
+      header: "Pages",
+      items: [
+        {
+          id: "profile-form",
+          label: "Profile Form",
+          icon: PersonOutlineOutlined,
+          tab: "profile",
+        },
+      ],
+    },
+    {
+      header: "Charts",
+      items: [
+        {
+          id: "bar-chart",
+          label: "Bar Chart",
+          icon: BarChartOutlined,
+          tab: "charts",
+        },
+        {
+          id: "pie-chart",
+          label: "Pie Chart",
+          icon: PieChartOutline,
+          tab: "charts",
+        },
+        {
+          id: "line-chart",
+          label: "Line Chart",
+          icon: TimelineOutlined,
+          tab: "charts",
+        },
+      ],
+    },
   ];
 
-  const userEmail = user?.email || "";
-  const userName = userEmail.substring(0, userEmail.indexOf("@")) || "User";
-
-  const handleTabChange = (tabId) => {
-    setActiveTab(tabId);
-    if (onClose) onClose(); // Close mobile sidebar when tab is selected
+  const handleClick = (item) => {
+    if (item.disabled) return;
+    if (item.tab) setActiveTab(item.tab);
+    if (onClose) onClose();
   };
 
-  return (
-    <div className="w-64 h-screen bg-white/30 backdrop-blur-xl border-r border-white/20 p-6 flex flex-col">
-      {/* Mobile Close Button */}
-      <div className="lg:hidden flex justify-end mb-4">
-        <button
-          onClick={onClose}
-          className="p-2 rounded-lg hover:bg-white/30 transition-colors"
-        >
-          <svg
-            className="w-6 h-6 text-gray-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-      </div>
+  const isSelected = (item) => !!item.tab && activeTab === item.tab;
 
-      {/* Logo */}
-      <div className="flex items-center space-x-3 mb-8">
-        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-          <img src={logo} className="w-8 h-8 rounded-lg" alt="Logo" />
-        </div>
-        <span className="text-xl font-bold text-gray-800">Concentria</span>
-      </div>
+  return (
+    <Box
+      sx={{
+        width: 256,
+        height: "100vh",
+        bgcolor: "transparent",
+        backdropFilter: "blur(10px)",
+        backgroundColor: "rgba(0,0,0,0.9)",
+        borderRight: "1px solid",
+        borderColor: "divider",
+        p: 2,
+        display: "flex",
+        flexDirection: "column",
+        color: "text.primary",
+        overflowX: "hidden",
+      }}
+    >
+      {/* Brand */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          mb: 2,
+          px: 1,
+          width: "100%",
+        }}
+      ></Box>
+
+      {/* Profile Card */}
+      <Box
+        sx={{
+          p: 2.5,
+          borderRadius: 3,
+          backgroundColor: "rgba(255,255,255,0.08)",
+          border: "1px solid",
+          borderColor: "divider",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 1.5,
+          mb: 2.5,
+          width: "100%",
+        }}
+      >
+        <Avatar sx={{ width: 100, height: 100, bgcolor: "primary.main" }}>
+          <PersonOutlineOutlined />
+        </Avatar>
+        <Box sx={{ minWidth: 0, width: "100%" }}>
+          <Typography
+            variant="h5"
+            fontWeight={800}
+            sx={{ color: "#E2E8F0", lineHeight: 1, mt: "10px" }}
+            noWrap
+          >
+            {displayName}
+          </Typography>
+        </Box>
+      </Box>
 
       {/* Navigation */}
-      <nav className="space-y-2 flex-1">
-        {navigationItems.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => handleTabChange(item.id)}
-            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-              activeTab === item.id
-                ? "bg-white/50 text-blue-600 shadow-lg backdrop-blur-sm"
-                : "text-gray-600 hover:bg-white/30 hover:text-gray-800"
-            }`}
+      <List sx={{ flex: 1, width: "100%" }}>
+        {sections.map((section, idx) => (
+          <Box
+            key={section.header || `sec-${idx}`}
+            sx={{ mb: 1.5, width: "100%" }}
           >
-            <item.icon className="h-5 w-5" />
-            <span className="font-medium">{item.label}</span>
-          </button>
+            {section.header && (
+              <Typography
+                variant="overline"
+                sx={{
+                  color: "#94A3B8",
+                  px: 1,
+                  display: "block",
+                  width: "100%",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {section.header}
+              </Typography>
+            )}
+            {section.items.map((item) => {
+              const Icon = item.icon;
+              const selected = isSelected(item);
+              return (
+                <ListItemButton
+                  key={item.id}
+                  onClick={() => handleClick(item)}
+                  disabled={item.disabled}
+                  selected={selected}
+                  sx={{
+                    borderRadius: 2,
+                    my: 0.25,
+                    opacity: item.disabled ? 0.6 : 1,
+                    cursor: item.disabled ? "not-allowed" : "pointer",
+                    "&.Mui-selected": {
+                      backgroundColor: "rgba(255,255,255,0.12)",
+                      color: "#A5B4FC",
+                    },
+                    "&:hover": { backgroundColor: "rgba(255,255,255,0.08)" },
+                    width: "100%",
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 36,
+                      color: selected ? "#A5B4FC" : "#CBD5E1",
+                    }}
+                  >
+                    <Icon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.label}
+                    primaryTypographyProps={{
+                      fontSize: 14,
+                      fontWeight: 600,
+                      noWrap: true,
+                    }}
+                  />
+                </ListItemButton>
+              );
+            })}
+          </Box>
         ))}
-      </nav>
+      </List>
 
-      {/* User Info & Logout */}
-      <div className="mt-auto">
-        <div className="bg-white/40 backdrop-blur-sm rounded-xl p-4 mb-4">
-          <div className="flex items-center space-x-3 mb-3">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-              <AiOutlineUser className="h-4 w-4 text-white" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-gray-800 flex justify-center items-center">
-                {userName}
-              </p>
-            </div>
-          </div>
-        </div>
-        <button
-          onClick={onLogout}
-          className="w-full flex items-center space-x-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-red-50/50 rounded-xl transition-all duration-200"
-        >
-          <AiOutlineLogout className="h-5 w-5" />
-          <span className="font-medium">Logout</span>
-        </button>
-      </div>
-    </div>
+      {/* Logout */}
+      <Button
+        onClick={onLogout}
+        startIcon={<LogoutOutlined />}
+        sx={{
+          color: "#E2E8F0",
+          justifyContent: "flex-start",
+          borderRadius: 2,
+          "&:hover": {
+            backgroundColor: "rgba(239,68,68,0.12)",
+            color: "#FCA5A5",
+          },
+          width: "100%",
+        }}
+      >
+        Logout
+      </Button>
+    </Box>
   );
 };
 

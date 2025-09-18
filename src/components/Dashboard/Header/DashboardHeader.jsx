@@ -1,6 +1,15 @@
 import React from "react";
 import { AiOutlineReload } from "react-icons/ai";
 import { FiTrash2, FiMenu } from "react-icons/fi";
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  Typography,
+  IconButton,
+  Button,
+  Paper,
+} from "@mui/material";
 
 const DashboardHeader = ({
   activeTab,
@@ -42,47 +51,52 @@ const DashboardHeader = ({
   const { title, subtitle } = getTabInfo();
 
   return (
-    <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-4 md:p-6 mb-6">
-      <div className="flex items-center justify-between">
-        {/* Mobile menu button */}
-        <div className="flex items-center space-x-3">
-          <button
-            onClick={onMenuClick}
-            className="md:hidden p-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-600 rounded-xl transition-all duration-200"
-          >
-            <FiMenu className="h-5 w-5" />
-          </button>
-          <div>
-            <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-1 md:mb-2">
+    <Paper elevation={0} sx={{ p: { xs: 2, md: 3 }, mb: 3 }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+          <IconButton onClick={onMenuClick} sx={{ display: { md: "none" } }}>
+            <FiMenu />
+          </IconButton>
+          <Box>
+            <Typography variant="h6" fontWeight={700} sx={{ color: "#E2E8F0" }}>
               {title}
-            </h1>
-            <p className="text-sm md:text-base text-gray-600 hidden sm:block">
-              {subtitle}
-            </p>
-          </div>
-        </div>
-
-        {/* Action buttons */}
-        <div className="flex space-x-2 md:space-x-3">
-          <button
-            onClick={onRefresh}
-            className="px-3 py-2 md:px-4 md:py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-600 rounded-xl transition-all duration-200 flex items-center space-x-1 md:space-x-2"
-          >
-            <AiOutlineReload className="h-4 w-4" />
-            <span className="hidden sm:inline">Refresh</span>
-          </button>
-          {showDeleteButton && (
-            <button
-              onClick={onDeleteAllLogs}
-              className="px-3 py-2 md:px-4 md:py-2 bg-red-500/20 hover:bg-red-500/30 text-red-600 rounded-xl transition-all duration-200 flex items-center space-x-1 md:space-x-2"
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ color: "#94A3B8", display: { xs: "none", sm: "block" } }}
             >
-              <FiTrash2 className="h-4 w-4" />
-              <span className="hidden sm:inline">Clear All</span>
-            </button>
+              {subtitle}
+            </Typography>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <Button
+            onClick={onRefresh}
+            startIcon={<AiOutlineReload />}
+            variant="outlined"
+            color="inherit"
+          >
+            Refresh
+          </Button>
+          {showDeleteButton && (
+            <Button
+              onClick={onDeleteAllLogs}
+              startIcon={<FiTrash2 />}
+              variant="outlined"
+              color="error"
+            >
+              Clear All
+            </Button>
           )}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Paper>
   );
 };
 
