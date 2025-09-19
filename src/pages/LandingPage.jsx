@@ -7,7 +7,7 @@ import '../App.css'
 
 function App() {
   return (
-    <div className="bg-[#121212] text-[#e0e0e0] min-h-screen px-[5vw] w-screen">
+    <div className="bg-[#020617] text-[#e0e0e0] min-h-screen px-[5vw] w-screen">
       <Header />
       <Hero />
     </div>
