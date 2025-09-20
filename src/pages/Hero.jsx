@@ -11,7 +11,13 @@ function Hero() {
   };
 
   const handleExploreProduct = () => {
-    navigate('/auth');
+    const contentSection = document.getElementById('features-section');
+    if (contentSection) {
+      contentSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   };
 
   return (
