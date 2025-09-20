@@ -41,7 +41,7 @@ const ProgressCircle = ({ logs, title = "Risk Score" }) => {
   const color = percent > 66 ? "#EF4444" : percent > 33 ? "#F59E0B" : "#10B981";
 
   return (
-    <div className="bg-black backdrop-blur-xl rounded-2xl shadow-xl p-4 md:p-6 h-full">
+    <div className="backdrop-blur-xl rounded-2xl shadow-xl p-4 md:p-6 h-full">
       <h3 className="text-lg md:text-xl font-semibold text-gray-200 mb-4">
         {title}
       </h3>

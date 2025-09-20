@@ -379,7 +379,7 @@ function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen w-screen bg-black text-slate-100 relative overflow-hidden">
+    <div className="min-h-screen w-screen bg-[#020617] text-slate-100 relative overflow-hidden">
       {/* Subtle gradient glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />

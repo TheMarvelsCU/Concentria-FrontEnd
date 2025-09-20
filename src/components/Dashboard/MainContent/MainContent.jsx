@@ -6,6 +6,8 @@ import NivoBarLogsByType from "../Charts/NivoBarLogsByType.jsx";
 import NivoPieRisk from "../Charts/NivoPieRisk.jsx";
 import ProgressCircle from "../Charts/ProgressCircle.jsx";
 import ProfilePage from "../UserProfile/ProfilePage.jsx";
+import SafetyDashboard from "../SafetyDashboard.jsx";
+import PermissionAnalysis from "../PermissionAnalysis.jsx";
 
 const MainContent = ({ activeTab, logs = [], logsLoading = false }) => {
   const renderOverview = () => (
@@ -81,6 +83,21 @@ const MainContent = ({ activeTab, logs = [], logsLoading = false }) => {
         return renderCharts();
       case "profile":
         return <ProfilePage />;
+      case "safety":
+        return <SafetyDashboard />;
+      case "permissions":
+        return <PermissionAnalysis />;
+      case "threats":
+        return (
+          <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
+            <h2 className="text-2xl font-bold text-white mb-4">
+              Threat Monitor
+            </h2>
+            <p className="text-gray-400">
+              Threat monitoring dashboard coming soon...
+            </p>
+          </div>
+        );
       default:
         return renderOverview();
     }

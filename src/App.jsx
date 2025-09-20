@@ -7,6 +7,8 @@ import LandingPage from "./pages/LandingPage.jsx";
 import AuthPage from "./pages/AuthPage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
+import SafetyDashboard from "./components/Dashboard/SafetyDashboard.jsx";
+import PermissionAnalysis from "./components/Dashboard/PermissionAnalysis.jsx";
 import "./App.css";
 
 const App = () => {
@@ -18,8 +20,31 @@ const App = () => {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/auth" element={<AuthPage />} />
-            <Route path="/dashboard" element={<PrivateRoute />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <DashboardPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/dashboard/safety"
+              element={
+                <PrivateRoute>
+                  <SafetyDashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/dashboard/permissions"
+              element={
+                <PrivateRoute>
+                  <PermissionAnalysis />
+                </PrivateRoute>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
       </ThemeProvider>

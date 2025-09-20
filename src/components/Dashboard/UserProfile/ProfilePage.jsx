@@ -40,11 +40,7 @@ const SectionCard = ({ title, children, subtitle }) => (
       justifyContent="space-between"
       sx={{ mb: 1 }}
     >
-      <Typography
-        variant="h6"
-        fontWeight={700}
-        sx={{ color: "#E2E8F0" }}
-      >
+      <Typography variant="h6" fontWeight={700} sx={{ color: "#E2E8F0" }}>
         {title}
       </Typography>
       {subtitle ? (
@@ -96,8 +92,8 @@ export default function ProfilePage() {
   const { user, logout } = useAuth();
 
   // Avatar
-  const [avatar, setAvatar] = useState(() =>
-    localStorage.getItem("profile.avatar") || ""
+  const [avatar, setAvatar] = useState(
+    () => localStorage.getItem("profile.avatar") || ""
   );
   const onPickAvatar = (e) => {
     const file = e.target.files?.[0];
@@ -133,8 +129,8 @@ export default function ProfilePage() {
   }));
 
   // API Key
-  const [apiKey, setApiKey] = useState(() =>
-    localStorage.getItem("profile.apiKey") || genApiKey()
+  const [apiKey, setApiKey] = useState(
+    () => localStorage.getItem("profile.apiKey") || genApiKey()
   );
   useEffect(() => localStorage.setItem("profile.apiKey", apiKey), [apiKey]);
 
@@ -155,7 +151,8 @@ export default function ProfilePage() {
       const stored = JSON.parse(
         localStorage.getItem("profile.sessions") || "[]"
       );
-      if (!stored.find((s) => s.id === "current")) stored.unshift(defaultSession);
+      if (!stored.find((s) => s.id === "current"))
+        stored.unshift(defaultSession);
       return stored;
     } catch {
       return [defaultSession];
@@ -241,9 +238,8 @@ export default function ProfilePage() {
 
   const backupCodes = useMemo(
     () =>
-      Array.from(
-        { length: 6 },
-        () => Math.random().toString(36).slice(2, 8).toUpperCase()
+      Array.from({ length: 6 }, () =>
+        Math.random().toString(36).slice(2, 8).toUpperCase()
       ),
     [prefs.twoFA]
   );
@@ -423,7 +419,9 @@ export default function ProfilePage() {
                   labelId="lang-label"
                   label="Language"
                   value={prefs.language}
-                  onChange={(e) => handlePrefsChange("language", e.target.value)}
+                  onChange={(e) =>
+                    handlePrefsChange("language", e.target.value)
+                  }
                 >
                   <MenuItem value="en">English</MenuItem>
                   <MenuItem value="fr">French</MenuItem>
@@ -436,7 +434,9 @@ export default function ProfilePage() {
                   labelId="tz-label"
                   label="Time Zone"
                   value={prefs.timezone}
-                  onChange={(e) => handlePrefsChange("timezone", e.target.value)}
+                  onChange={(e) =>
+                    handlePrefsChange("timezone", e.target.value)
+                  }
                 >
                   <MenuItem value={prefs.timezone}>{prefs.timezone}</MenuItem>
                   <MenuItem value="UTC">UTC</MenuItem>
@@ -589,7 +589,11 @@ export default function ProfilePage() {
           <Stack spacing={1}>
             {backupCodes.map((c) => (
               <Stack key={c} direction="row" spacing={1} alignItems="center">
-                <TextField size="small" value={c} InputProps={{ readOnly: true }} />
+                <TextField
+                  size="small"
+                  value={c}
+                  InputProps={{ readOnly: true }}
+                />
                 <Button size="small" onClick={() => copy(c)}>
                   Copy
                 </Button>

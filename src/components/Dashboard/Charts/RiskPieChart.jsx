@@ -39,7 +39,7 @@ const RiskPieChart = ({ logs }) => {
   const total = data.reduce((sum, d) => sum + d.value, 0);
 
   return (
-    <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-4 md:p-6 h-full">
+    <div className="backdrop-blur-xl rounded-2xl shadow-xl border p-4 md:p-6 h-full">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg md:text-xl font-semibold text-gray-800">
           Risk Breakdown
