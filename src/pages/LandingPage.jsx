@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from './Header.jsx';
-import Hero from './Hero.jsx';
-import Content from './Content.jsx';
-import Testimonials from './Testimonials.jsx';
+import Header from './Header';
+import Hero from './Hero';
+import Content from './Content';
+import Testimonials from './Testimonials';
 import '../App.css'
 // Note: No App.css is needed anymore, styling is inline with Tailwind classes.
 

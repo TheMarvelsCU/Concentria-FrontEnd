@@ -1,12 +1,12 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider, CssBaseline } from "@mui/material";
-import { AuthProvider } from "./contexts/AuthContext.jsx";
+import { AuthProvider } from "./contexts/AuthContext";
 import theme from "./theme/muiTheme";
-import LandingPage from "./pages/LandingPage.jsx";
-import AuthPage from "./pages/AuthPage.jsx";
-import DashboardPage from "./pages/DashboardPage.jsx";
-import PrivateRoute from "./routes/PrivateRoute.jsx";
+import LandingPage from "./pages/LandingPage";
+import AuthPage from "./pages/AuthPage";
+import DashboardPage from "./pages/DashboardPage";
+import PrivateRoute from "./routes/PrivateRoute";
 import "./App.css";
 
 const App = () => {
