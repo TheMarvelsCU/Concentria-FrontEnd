@@ -214,104 +214,60 @@ class PredictionAPI {
   }
 
   async analyzeSafety(url, permissions, metadata = {}) {
-    // Always make backend call for logging purposes (showcase)
-    if (this.logToBackend) {
-      try {
-        console.log("📡 Making backend call for logging...");
-        await this.makeRequest("/safety", {
-          method: "POST",
-          body: JSON.stringify({
-            url,
-            permissions,
-            metadata: {
-              userAgent: navigator.userAgent,
-              referrer: document.referrer,
-              timestamp: new Date().toISOString(),
-              ...metadata,
-            },
-          }),
-        });
-        console.log("✅ Backend logging successful");
-      } catch (error) {
-        console.warn(
-          "⚠️ Backend logging failed, continuing with frontend logic:",
-          error.message
+    // Pure frontend logic - no backend calls for URL analysis
+    return new Promise((resolve) => {
+      // Simulate realistic API delay
+      setTimeout(() => {
+        const analysis = this.calculateSafetyScore(url, permissions);
+        const flaggedPermissions = permissions
+          .filter((p) => (PERMISSION_RISK_LEVELS[p] || 5) >= 7)
+          .map((p) => ({
+            name: p.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase()),
+            description:
+              PERMISSION_DESCRIPTIONS[p] ||
+              "Permission description not available",
+            riskLevel: PERMISSION_RISK_LEVELS[p] || 5,
+            type: p.includes("storage")
+              ? "STORAGE"
+              : p.includes("media") ||
+                p.includes("camera") ||
+                p.includes("microphone")
+              ? "MEDIA"
+              : p.includes("location") || p.includes("geolocation")
+              ? "LOCATION"
+              : p.includes("payment")
+              ? "FINANCIAL"
+              : "SYSTEM",
+          }));
+
+        const recommendations = this.generateRecommendations(
+          url,
+          permissions,
+          analysis
         );
-      }
-    }
 
-    // Use frontend logic for actual calculations
-    if (this.useLocalLogic) {
-      // Simulate API delay for realistic experience
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          const analysis = this.calculateSafetyScore(url, permissions);
-          const flaggedPermissions = permissions
-            .filter((p) => (PERMISSION_RISK_LEVELS[p] || 5) >= 7)
-            .map((p) => ({
-              name: p
-                .replace("-", " ")
-                .replace(/\b\w/g, (l) => l.toUpperCase()),
-              description:
-                PERMISSION_DESCRIPTIONS[p] ||
-                "Permission description not available",
-              riskLevel: PERMISSION_RISK_LEVELS[p] || 5,
-              type: p.includes("storage")
-                ? "STORAGE"
-                : p.includes("media") ||
-                  p.includes("camera") ||
-                  p.includes("microphone")
-                ? "MEDIA"
-                : p.includes("location") || p.includes("geolocation")
-                ? "LOCATION"
-                : p.includes("payment")
-                ? "FINANCIAL"
-                : "SYSTEM",
-            }));
-
-          const recommendations = this.generateRecommendations(
+        resolve({
+          success: true,
+          data: {
             url,
-            permissions,
-            analysis
-          );
-
-          resolve({
-            success: true,
-            data: {
-              url,
-              safetyScore: analysis.safetyScore,
-              riskLevel: analysis.riskLevel,
-              timestamp: new Date().toISOString(),
-              analysis: {
-                totalPermissions: analysis.totalPermissions,
-                highRiskPermissions: analysis.highRiskPermissions,
-                flaggedPermissions,
-                recommendations,
-                domainTrust:
-                  analysis.domainRisk === 0
-                    ? "trusted"
-                    : analysis.domainRisk === 1
-                    ? "neutral"
-                    : "suspicious",
-              },
+            safetyScore: analysis.safetyScore,
+            riskLevel: analysis.riskLevel,
+            timestamp: new Date().toISOString(),
+            analysis: {
+              totalPermissions: analysis.totalPermissions,
+              highRiskPermissions: analysis.highRiskPermissions,
+              flaggedPermissions,
+              recommendations,
+              domainTrust:
+                analysis.domainRisk === 0
+                  ? "trusted"
+                  : analysis.domainRisk === 1
+                  ? "neutral"
+                  : "suspicious",
             },
-          });
-        }, 1000 + Math.random() * 1000); // 1-2 second delay
-      });
-    }
-
-    return this.makeRequest("/safety", {
-      method: "POST",
-      body: JSON.stringify({
-        url,
-        permissions,
-        metadata: {
-          userAgent: navigator.userAgent,
-          referrer: document.referrer,
-          timestamp: new Date().toISOString(),
-          ...metadata,
-        },
-      }),
+          },
+        });
+      }, 800 + Math.random() * 400); // 800ms-1.2s delay
     });
   }
 

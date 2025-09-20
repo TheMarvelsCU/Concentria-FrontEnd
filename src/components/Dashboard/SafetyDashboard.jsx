@@ -44,7 +44,6 @@ const SafetyDashboard = () => {
   const [urlInput, setUrlInput] = useState("");
   const [selectedPermissions, setSelectedPermissions] = useState([]);
   const [apiStatus, setApiStatus] = useState("checking");
-  const [backendCallStatus, setBackendCallStatus] = useState("");
   const [stats, setStats] = useState({
     totalAnalyses: 0,
     averageSafetyScore: 0,
@@ -141,7 +140,6 @@ const SafetyDashboard = () => {
     }
 
     setLoading(true);
-    setBackendCallStatus("Making backend API call...");
 
     try {
       const result = await predictionAPI.analyzeSafety(
@@ -149,29 +147,21 @@ const SafetyDashboard = () => {
         selectedPermissions
       );
 
-      setBackendCallStatus("Backend call completed, processing results...");
-
       if (result.success) {
         setSafetyData(result.data);
         setAnalysisHistory((prev) => [result.data, ...prev].slice(0, 10));
         updateStats(result.data);
-        setBackendCallStatus("Analysis complete!");
-
-        // Clear status after 3 seconds
-        setTimeout(() => setBackendCallStatus(""), 3000);
       } else {
-        console.error("API Error:", result.message || "Unknown error");
+        console.error("Analysis Error:", result.message || "Unknown error");
         alert(
           `Failed to analyze website safety: ${
             result.message || "Unknown error"
           }`
         );
-        setBackendCallStatus("");
       }
     } catch (error) {
       console.error("Error analyzing safety:", error);
       alert(`Error analyzing website safety: ${error.message}`);
-      setBackendCallStatus("");
     } finally {
       setLoading(false);
     }
@@ -393,15 +383,8 @@ const SafetyDashboard = () => {
                 <label className="block text-sm font-medium text-gray-300">
                   Website URL
                 </label>
-                <div className="flex items-center space-x-2">
-                  <div className="text-xs text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">
-                    Live Backend + Frontend Logic
-                  </div>
-                  {backendCallStatus && (
-                    <div className="text-xs text-green-400 bg-green-500/10 px-2 py-1 rounded animate-pulse">
-                      {backendCallStatus}
-                    </div>
-                  )}
+                <div className="text-xs text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">
+                  Frontend Analysis Only
                 </div>
               </div>
               <div className="flex space-x-4">
